@@ -31,25 +31,34 @@ double calculate(std::stack postfixStack) {
   getline(input, std::cin);
   std::cout << std::endl;
 
+  //String to store the operator or operand
+  std::string str = "";
+
   //While the input string is not empty
-  while (!isEmpty(input)) {
-    //Get the operand or operator
-    
+  while (!input.empty()) {
+    //Get the operand or operator while there are no spaces
+    for (int i = 0; str != " "; i++) {
+      //Put a character into str
+      str = str + input[i];
+
+      //Remove the caracter from input
+      input.erase(0,1);
+    }
+
+    //Check if the character is a space
+    if (var == " ") {
+      //Start back at the top of the loop
+      return;
+    } else if (var == "+" || var == "-"|| var == "/"|| var == "*") { //Check if its an operator
+      //Call the calculating function
+
+    }
+
   }
 
   return 0;
 }
 
-bool isEmpty(std::string input) {
-
-  //While the end of the string has not been reached
-  for (int i = 0; i <= input.length(); i++) {
-    //If at one moment, the character is not a space, return false
-    if (input[i] != " ") return false
-
-  }
-
-  //By default, the function returns false
-  return true;
+void popCalc(char var, std::stack<double>) {
 
 }

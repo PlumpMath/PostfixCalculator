@@ -2,11 +2,10 @@
 #include <stack>
 
 //Prototypes
-double calculate(std::stack postfixStack);
-void popCalc(std::string str, std::stack<double>* postfixStack)
+double calculate(std::stack<double> postfixStack);
+void popCalc(std::string str, std::stack<double>* postfixStack);
 
 int main() {
-
   //Postfix stack
   std::stack<double> postfixStack;
 
@@ -22,13 +21,13 @@ int main() {
   return 0;
 }
 
-double calculate(std::stack postfixStack) {
+double calculate(std::stack<double> postfixStack) {
 
   //Input string
   std::string input;
   //Get the Input
   std::cout << "Please input the postfix expression : ";
-  getline(input, std::cin);
+  getline(std::cin, input);
   std::cout << std::endl;
 
   //String to store the operator or operand
@@ -48,7 +47,7 @@ double calculate(std::stack postfixStack) {
     //Check if the character is a space
     if (str == " ") {
       //Start back at the top of the loop
-      return;
+      continue;
     } else if (str == "+" || str == "-"|| str == "/"|| str == "*") { //Check if its an operator
       //Call the calculating function with a pointer to
       //the postfixStack
@@ -62,11 +61,9 @@ double calculate(std::stack postfixStack) {
       postfixStack.push(converted);
     }
 
-    //TODO: Return the result
-
   }
 
-  return 0;
+  return postfixStack.top();
 }
 
 void popCalc(std::string str, std::stack<double>* postfixStack) {
@@ -76,37 +73,46 @@ void popCalc(std::string str, std::stack<double>* postfixStack) {
 
   //NOTE: I'll have to test out this system while dividing as it might take the operands int the wrong order
 
-  //Pop out the Operands
-  operand1 = postfixStack.pop();
-  operand2 = postfixStack.pop();
+  //Read and pop out the Operands
+  operand1 = postfixStack->top();
+  operand2 = postfixStack->top();
+  postfixStack->pop();
+  postfixStack->pop();
 
   //Store the result
   double result;
 
   //Determine what operation to do
-  switch (var) {
-    case "+": {
-      result = operand1 + operand2;
-      break;
-    }
+  if (str.size() == 1) {
+    //Convert str to character
+    std::cout << "DEBUG" << std::endl; //Debug
+    char op = str[0];
 
-    case "-": {
-      result = operand1 - operand2;
-      break;
-    }
+    switch (op) {
+      case '+': {
+        result = operand1 + operand2;
+        break;
+      }
 
-    case "*": {
-      result = operand1 * operand2;
-      break;
-    }
+      case '-': {
+        result = operand1 - operand2;
+        break;
+      }
 
-    case "/": {
-      result = operand1 / operand2;
-      break;
+      case '*': {
+        result = operand1 * operand2;
+        break;
+      }
+
+      case '/': {
+        result = operand1 / operand2;
+        break;
+      }
     }
   }
 
+
   //Push the result in the postfixStack
-  postfixStack.push(result);
+  postfixStack->push(result);
 
 }

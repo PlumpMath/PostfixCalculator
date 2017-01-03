@@ -42,7 +42,13 @@ double calculate(std::stack<double> postfixStack) {
 
       //Remove the caracter from input
       input.erase(0,1);
+
+      std::cout << "DEBUG 2" << std::endl; //Debug
+
+
     }
+
+    std::cout << "DEBUG 1" << std::endl; //Debug
 
     //Check if the character is a space
     if (str == " ") {
@@ -85,7 +91,6 @@ void popCalc(std::string str, std::stack<double>* postfixStack) {
   //Determine what operation to do
   if (str.size() == 1) {
     //Convert str to character
-    std::cout << "DEBUG" << std::endl; //Debug
     char op = str[0];
 
     switch (op) {

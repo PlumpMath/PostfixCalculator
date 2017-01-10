@@ -30,44 +30,65 @@ double calculate(std::stack<double> postfixStack) {
   getline(std::cin, input);
   std::cout << std::endl;
 
-  //String to store the operator or operand
-  std::string str = "";
+  //Token array
+  std::string tokens[10];
+  int iterator = 0;
 
-  //While the input string is not empty
-  while (!input.empty()) {
-    //Get the operand or operator while there are no spaces
-    for (int i = 0; str != " "; i++) {
-      //Put a character into str
-      str = str + input[i];
+  //Character read and token string Variable
+  //NOTE: We initialize token because we will be using +=
+  std::string token = "";
+  char c;
 
-      //Remove the caracter from input
-      input.erase(0,1);
+  //Add space to the end of input so that it counts the last token
+  input += " ";
 
-      std::cout << "DEBUG 2" << std::endl; //Debug
+  //Tokenize the input
+  for (int i = 0; i <= input.length(); i++) {
 
+    //Get the character in input
+    c = input[i];
 
-    }
+    if(c == ' ') {
+      tokens[iterator] = token;
+      iterator++;
 
-    std::cout << "DEBUG 1" << std::endl; //Debug
+      //Reset token
+      token = "";
 
-    //Check if the character is a space
-    if (str == " ") {
-      //Start back at the top of the loop
-      continue;
-    } else if (str == "+" || str == "-"|| str == "/"|| str == "*") { //Check if its an operator
-      //Call the calculating function with a pointer to
-      //the postfixStack
-      popCalc(str, &postfixStack);
     } else {
-      //Convert the number to a double from a string
-      double converted;
-      converted = std::stod(str);
+      token += c;
 
-      //Push the number into the stack
-      postfixStack.push(converted);
+    }
+  }
+
+  //Variable for size type and string
+  std::size_t sz;
+  std::string str;
+
+    for(int i = 0; i <= 10; i++) {
+
+      //Check if the character is a space
+      if (tokens[i] == " ") {
+        //Start back at the top of the loop
+        continue;
+      } else if (tokens[i] == "+" || tokens[i] == "-"|| tokens[i] == "/"|| tokens[i] == "*") { //Check if its an operator
+        //Call the calculating function with a pointer to
+        //the postfixStack
+        popCalc(tokens[i], &postfixStack);
+      } else {
+        //Convert the number to a double from a string
+        //Store the token in string
+        str = token[i];
+
+        double converted = Double.parseDouble(str);
+
+        //Push the number into the stack
+        postfixStack.push(converted);
+      }
+
     }
 
-  }
+
 
   return postfixStack.top();
 }

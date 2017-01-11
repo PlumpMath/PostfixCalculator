@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <sstream>
 
 //Prototypes
 double calculate(std::stack<double> postfixStack);
@@ -67,20 +68,23 @@ double calculate(std::stack<double> postfixStack) {
 
     for(int i = 0; i <= 10; i++) {
 
-      //Check if the character is a space
-      if (tokens[i] == " ") {
-        //Start back at the top of the loop
-        continue;
-      } else if (tokens[i] == "+" || tokens[i] == "-"|| tokens[i] == "/"|| tokens[i] == "*") { //Check if its an operator
+      if (tokens[i] == "+" || tokens[i] == "-"|| tokens[i] == "/"|| tokens[i] == "*") { //Check if its an operator
         //Call the calculating function with a pointer to
         //the postfixStack
         popCalc(tokens[i], &postfixStack);
+
+        return postfixStack.top();
       } else {
         //Convert the number to a double from a string
         //Store the token in string
-        str = token[i];
+        str = tokens[i];
+        std::cout << "String " + str << std::endl;
+        std::stringstream ss;
+        ss << str;
+        double converted;
+        ss >> converted;
+        std::cout << converted << std::endl;
 
-        double converted = Double.parseDouble(str);
 
         //Push the number into the stack
         postfixStack.push(converted);
@@ -103,6 +107,8 @@ void popCalc(std::string str, std::stack<double>* postfixStack) {
   //Read and pop out the Operands
   operand1 = postfixStack->top();
   operand2 = postfixStack->top();
+  std::cout << "Operands ";
+  std::cout << operand1 << std::endl << operand2 << std::endl;
   postfixStack->pop();
   postfixStack->pop();
 
@@ -116,6 +122,7 @@ void popCalc(std::string str, std::stack<double>* postfixStack) {
 
     switch (op) {
       case '+': {
+        std::cout << "In case '+'" << std::endl;
         result = operand1 + operand2;
         break;
       }

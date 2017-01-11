@@ -32,7 +32,7 @@ double calculate(std::stack<double> postfixStack) {
   std::cout << std::endl;
 
   //Token array
-  std::string tokens[10];
+  std::string tokens[10] = "end";
   int iterator = 0;
 
   //Character read and token string Variable
@@ -73,7 +73,12 @@ double calculate(std::stack<double> postfixStack) {
         //the postfixStack
         popCalc(tokens[i], &postfixStack);
 
+      } else if (tokens[i] == "end") {
+
+        std::cout << "In end part" << std::endl;
+
         return postfixStack.top();
+
       } else {
         //Convert the number to a double from a string
         //Store the token in string
